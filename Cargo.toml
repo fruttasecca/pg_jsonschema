@@ -19,6 +19,7 @@ pgx = "=0.6.0-alpha.1"
 serde = "1.0"
 serde_json = "1.0"
 jsonschema = {version = "0.16.0", default-features = false, features = []}
+infers-jsonschema = "0.1.0"
 
 [dev-dependencies]
 pgx-tests = "=0.6.0-alpha.1"

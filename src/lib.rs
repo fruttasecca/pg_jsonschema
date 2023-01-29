@@ -12,6 +12,17 @@ fn jsonb_matches_schema(schema: Json, instance: JsonB) -> bool {
     jsonschema::is_valid(&schema.0, &instance.0)
 }
 
+#[pg_extern(immutable, strict)]
+fn json_infer_schema(instance: Json) -> Json {
+    pgx::Json(infers_jsonschema::infer(&instance.0))
+}
+
+#[pg_extern(immutable, strict)]
+fn jsonb_infer_schema(instance: JsonB) -> JsonB {
+    pgx::JsonB(infers_jsonschema::infer(&instance.0))
+}
+
+
 #[pg_schema]
 #[cfg(any(test, feature = "pg_test"))]
 mod tests {

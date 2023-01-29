@@ -30,6 +30,16 @@ and
 jsonb_matches_schema(schema json, instance jsonb) returns bool
 ```
 
+```sql
+-- Infer a json schema from a json instance
+json_infer_schema(schema json) returns json
+```
+
+```sql
+-- Infer a jsonb schema from a jsonb instance
+jsonb_infer_schema(schema jsonb) returns jsonb
+```
+
 ## Usage
 Those functions can be used to constrain `json` and `jsonb` columns to conform to a schema.
 
@@ -73,6 +83,11 @@ values ('{"tags": [1, 3]}');
 -- Result:
 --   ERROR:  new row for relation "customer" violates check constraint "customer_metadata_check"
 --   DETAIL:  Failing row contains (2, {"tags": [1, 3]}).
+
+select json_infer_schema('{"tags": ["vip", "darkmode-ui"]}');
+-- Result:
+--  {"$schema":"http://json-schema.org/draft-07/schema#","properties":{"tags":{"items":{"type":"string"},"type":"array"}},"required":["tags"],"type":"object"}
+
 ```
 
 ## JSON Schema Support
